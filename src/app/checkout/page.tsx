@@ -37,6 +37,15 @@ export default function CheckoutPage() {
   }, [form.zip, form.state, totalPrice, cart.length]);
 
   const handleProcessOrder = () => {
+    // Sanitize basic inputs before processing
+    const sanitize = (str: string) => str.replace(/[<>]/g, '');
+    const sanitizedEmail = sanitize(form.email);
+    
+    if (!sanitizedEmail.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
     setStep('processing');
     setTimeout(() => {
       setStep('success');
